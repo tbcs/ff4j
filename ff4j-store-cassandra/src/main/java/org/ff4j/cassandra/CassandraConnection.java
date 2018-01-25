@@ -6,6 +6,7 @@ import static org.ff4j.cassandra.CassandraConstants.DEFAULT_KEYSPACE;
 import static org.ff4j.cassandra.CassandraConstants.DEFAULT_REPLICATION_FACTOR;
 import static org.ff4j.cassandra.CassandraConstants.PORT_CQL_NATIVE;
 
+//import com.datastax.driver.core.ProtocolVersion;
 import java.text.MessageFormat;
 
 import org.ff4j.utils.Util;
@@ -137,7 +138,9 @@ public class CassandraConnection {
      */
     public void initSession() {
         if (null == cluster) {
-            Builder builder = Cluster.builder().addContactPoint(hostName).withPort(port);
+            Builder builder = Cluster.builder().addContactPoint(hostName)
+//                .withProtocolVersion(ProtocolVersion.V1)
+                .withPort(port);
             if (Util.hasLength(userName)) {
                 builder.withCredentials(userName, userPassword);
             }
@@ -145,10 +148,14 @@ public class CassandraConnection {
         }
         Metadata metadata = cluster.getMetadata();
         LOGGER.info("Connecting to cluster... '{}'",  metadata.getClusterName());
-        for ( Host host : metadata.getAllHosts() ) {
+
+			for ( Host host : metadata.getAllHosts() ) {
             LOGGER.info("Datatacenter: '{}' Host: '{}' Rack '{}'", host.getDatacenter(), host.getAddress(), host.getRack());
         }
-        this.session = cluster.connect();  
+        this.session = cluster.connect();
+//			System.out.println("CASSANDRA DRIVER VERSION: " + getSession().getCluster().getDriverVersion());
+//			System.out.println("CASSANDRA PROTO VERSION: " +
+//			session.getCluster().getConfiguration().getProtocolOptions().getProtocolVersion());
         LOGGER.info("Connection Successful.");
     }
     
@@ -156,7 +163,10 @@ public class CassandraConnection {
      * Create keySpace with default value.
      */
     public void createKeySpace() {
-        getSession().execute(MessageFormat.format(CQL_CREATEKEYSPACE, keySpace, replicationFactor));
+      KeyspaceMetadata ks = getSession().getCluster().getMetadata().getKeyspace(keySpace);
+      if (ks == null) {
+				getSession().execute(MessageFormat.format(CQL_CREATEKEYSPACE, keySpace, replicationFactor));
+			}
     }
     
     /**

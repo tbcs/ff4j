@@ -1,5 +1,7 @@
 package org.ff4j.cassandra;
 
+import com.datastax.driver.core.Session;
+import com.datastax.driver.mapping.MappingManager;
 import static org.ff4j.audit.EventConstants.ACTION_CHECK_OK;
 import static org.ff4j.cassandra.CassandraConstants.COLUMN_FAMILY_AUDIT;
 
@@ -71,8 +73,10 @@ public class CassandraQueryBuilder {
     
     /** Connection. */
     private final CassandraConnection connection;
-    
-    /**
+	private final Session session;
+	private final MappingManager manager;
+
+	/**
      * Initialization of the builder with a dedicated connection.
      *
      * @param conn
@@ -80,7 +84,9 @@ public class CassandraQueryBuilder {
      */
     public CassandraQueryBuilder(CassandraConnection conn) {
         this.connection = conn;
-    }
+			this.session = conn.getSession();
+			this.manager = new MappingManager(session);
+		}
     
     public String cqlDropAudit() {
         return "DROP TABLE IF EXISTS "+ connection.getKeySpace() + "." + COLUMN_FAMILY_AUDIT;
@@ -163,7 +169,7 @@ public class CassandraQueryBuilder {
     }
     
     public String cqlTruncateFeatures() {
-        return "TRUNCATE TABLE " + connection.getKeySpace() + "." + COLUMN_FAMILY_FEATURES;
+        return "TRUNCATE " + connection.getKeySpace() + "." + COLUMN_FAMILY_FEATURES;
     }
     
     public Statement selectAllFeatures() {

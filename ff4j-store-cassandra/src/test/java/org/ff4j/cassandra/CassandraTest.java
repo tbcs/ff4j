@@ -22,9 +22,12 @@ package org.ff4j.cassandra;
 
 import java.lang.reflect.Constructor;
 
-import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
+//import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Session;
 import org.ff4j.audit.EventConstants;
 import org.ff4j.audit.EventQueryDefinition;
+import org.ff4j.cassandra.store.FeatureStoreCassandra;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -39,7 +42,7 @@ import com.datastax.driver.core.exceptions.NoHostAvailableException;
  *
  */
 //Cassandra embedded KO
-@Ignore
+//@Ignore
 public class CassandraTest {
     
     /** Reuse the embedded server. */
@@ -47,9 +50,9 @@ public class CassandraTest {
     
     @BeforeClass
     public static void startEmbeddedCassandra() throws Exception {
-        EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
-        conn = new CassandraConnection("127.0.0.1", 9142);
-        conn.createKeySpace();
+        //EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
+        conn = new CassandraConnection("127.0.0.1", 9042);
+//        conn.createKeySpace();
     }
     
     /** TDD. */
@@ -114,8 +117,7 @@ public class CassandraTest {
         cc.setUserName("sample");
         cc.initSession();
     }
-    
-    
+
     /** TDD. */
     @Test
     public void testCassandraNoHost() {

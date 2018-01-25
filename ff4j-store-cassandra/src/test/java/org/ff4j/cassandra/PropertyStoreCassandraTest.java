@@ -20,7 +20,7 @@ package org.ff4j.cassandra;
  * #L%
  */
 
-import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
+//import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
 import org.ff4j.cassandra.store.PropertyStoreCassandra;
 import org.ff4j.property.store.PropertyStore;
 import org.ff4j.test.propertystore.PropertyStoreTestSupport;
@@ -43,8 +43,8 @@ public class PropertyStoreCassandraTest extends PropertyStoreTestSupport {
     
     @BeforeClass
     public static void startEmbeddedCassandra() throws Exception {
-        EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
-        conn = new CassandraConnection("127.0.0.1", 9142);
+       // EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
+        conn = new CassandraConnection("127.0.0.1", 9042);
         conn.createKeySpace();
     }
 

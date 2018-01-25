@@ -121,7 +121,7 @@ public interface FF4JCacheManager {
     Object getFeatureNativeCache();
     
     /**
-     * Access to embedded implementation of cach for Properties
+     * Access to embedded implementation of cache for Properties
      * 
      * @return native implementation of cache.
      */

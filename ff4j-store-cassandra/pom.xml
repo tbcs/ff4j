@@ -4,7 +4,7 @@
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<!-- ~         COORDINATES      ~ -->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	<artifactId>ff4j-store-cassandra</artifactId>
+	<artifactId>ff4j-store-cassandra12</artifactId>
 	<packaging>jar</packaging>
 	<name>ff4j-store-cassandra</name>
 
@@ -46,7 +46,12 @@
 		<dependency>
 		    <groupId>com.datastax.cassandra</groupId>
 		    <artifactId>cassandra-driver-core</artifactId>
-		    <version>3.1.0</version><!--$NO-MVN-MAN-VER$-->
+		    <version>3.3.2</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+		    <groupId>com.datastax.cassandra</groupId>
+		    <artifactId>cassandra-driver-mapping</artifactId>
+		    <version>3.3.2</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<!-- Tests -->
@@ -71,12 +76,12 @@
 			<artifactId>logback-classic</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-            <groupId>org.cassandraunit</groupId>
-            <artifactId>cassandra-unit</artifactId>
-            <version>${version.cassandra.unit}</version>
-            <scope>test</scope>
-        </dependency>
+		<!--<dependency>-->
+            <!--<groupId>org.cassandraunit</groupId>-->
+            <!--<artifactId>cassandra-unit</artifactId>-->
+            <!--<version>${version.cassandra.unit}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 		
 
 	</dependencies>

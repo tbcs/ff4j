@@ -1,3 +1,13 @@
+# Patched version of FF4j
+
+This version of FF4j has been patched so that `FeatureStoreCassandra` is compatible with Cassandra v1.2.x.  `PropertyStoreCassandra` and `EventRepositoryCassandra` have not been patched, these are not compatible with that old version of Cassandra.
+
+The module (ff4j-store-cassandra12) can be built via:
+
+`mvn install -DskipTests`
+
+<hr />
+
 <img src="http://ff4j.org/images/ff4j.png" height="120px" />
 
 ## Feature Flipping for Java

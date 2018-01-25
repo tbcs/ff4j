@@ -157,7 +157,9 @@ public class CassandraConstants {
     // ------- Keyspace ------------------------
     
     /** CQL to work with features. */
-    public static final String CQL_CREATEKEYSPACE = "CREATE KEYSPACE IF NOT EXISTS {0} "
+    public static final String CQL_CREATEKEYSPACE = "CREATE KEYSPACE" +
+        //" IF NOT EXISTS" +
+        " {0} "
             + "WITH replication = '{' '''class''': '''SimpleStrategy''', '''replication_factor''' : {1} '}'";
     
     

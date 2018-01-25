@@ -1,6 +1,6 @@
 package org.ff4j.cassandra;
 
-import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
+//import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
 
 /*
  * #%L
@@ -44,8 +44,8 @@ public class EventRepositoryCassandraTest extends EventRepositoryTestSupport {
     @BeforeClass
     public static void startEmbeddedCassandra() throws Exception {
         // Use Cassandra-Unit 
-        EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
-        conn = new CassandraConnection("127.0.0.1", 9142);
+       // EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
+        conn = new CassandraConnection("127.0.0.1", 9042);
         // <--
         conn.createKeySpace();
     }

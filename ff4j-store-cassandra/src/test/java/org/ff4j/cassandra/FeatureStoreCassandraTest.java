@@ -20,11 +20,13 @@ package org.ff4j.cassandra;
  * #L%
  */
 
-import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
+//import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
 import org.ff4j.cassandra.store.FeatureStoreCassandra;
 import org.ff4j.core.FeatureStore;
 import org.ff4j.test.store.FeatureStoreTestSupport;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -37,8 +39,9 @@ import org.junit.Test;
  * @author Cedrick LUNVEN (@clunven)
  */
 // Cassandra embedded KO
-@Ignore
+
 public class FeatureStoreCassandraTest extends FeatureStoreTestSupport {
+	FeatureStoreCassandra theStore;
    
     /** Reuse the embedded server. */
     protected static CassandraConnection conn;
@@ -50,11 +53,19 @@ public class FeatureStoreCassandraTest extends FeatureStoreTestSupport {
         // <--
         
         // Use Cassandra-Unit 
-        EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
-        conn = new CassandraConnection("127.0.0.1", 9142);
+        //EmbeddedCassandraServerHelper.startEmbeddedCassandra(15000);
+        conn = new CassandraConnection("127.0.0.1", 9042);
         // <--
         conn.createKeySpace();
     }
+
+    @After
+		public void cleanup() {
+			if (theStore != null) {
+				//System.out.println("CLEANING CASSANDRA STORE *********************");
+				theStore.clear();
+			}
+		}
     
     @Override
     protected FeatureStore initStore() {
@@ -62,6 +73,7 @@ public class FeatureStoreCassandraTest extends FeatureStoreTestSupport {
        cassandraStore.createSchema();
        cassandraStore.clear();
        cassandraStore.importFeaturesFromXmlFile("ff4j.xml");
+       theStore = cassandraStore;
        return cassandraStore;
     }
     
